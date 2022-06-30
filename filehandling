@@ -4,9 +4,10 @@ class Employees
     table = CSV.read(file, headers: true, header_converters: :symbol)
     table.each do |row|
       hsh[row[2]].push("#{row[0]} (#{table.headers[1]}:#{row[1]})")
-      hsh[row[2]].sort_by! {|el| el[-3..-1]}
+      hsh[row[2]].sort_by! {|values| values[-3..-1]}
     end
   end
+
   def write_file(hsh)
     File.open('employees.txt', 'w') do |file|
     hsh.each do |designation, value|
@@ -17,6 +18,7 @@ class Employees
     end
   end
 end
+
 emp  = Employees.new
 hsh = Hash.new{|hash, key| hash[key]=[]}
 emp.read_file("testfile.csv",hsh)
